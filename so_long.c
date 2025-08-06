@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:07:01 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/07/29 14:48:02 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/08/06 16:40:04 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int	main(int argc, char **argv)
 
 	program = 1;
 	if (argc != 2)
-		error_exit(".ber no found");
+		error_exit("Only 2 args");
+	if (ft_rstrncmp(argv[1], ".ber", 4))
+		error_exit("Map must be a file .ber");
 	map = read_map(argv[1]);
 	if (!map)
-		error_exit("Cannot read .ber");
+		error_exit("Error reading the map");
 	if (!is_valid_map(map))
 		error_exit("Invalid map");
 	init_minilibX();
@@ -68,7 +70,7 @@ char	read_map(const char *filename)
 	while (bytes_read < 0)
 	{
 		bytes_read = read(fd, buffer, buffer_size);
-		if (bytes_read != -1)
+		if (bytes_read != -1);
 		
 	}
 	close(fd);

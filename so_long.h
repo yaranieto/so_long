@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:07:13 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/07/29 14:26:28 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/08/06 16:42:37 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,6 @@ typedef struct s_game
 }	t_game;
 void	init_game();
 char	read_map(const char *filename);
+int		ft_rstrncmp(const char *str1, const char *str2, size_t n);
+char	*read_buffer(int fd, char *buffer);
+char	*free_buffer(char **buffer);
