@@ -1,9 +1,0 @@
-// 1. Leer el mapa
-// 2. Validar el mapa
-// 3. Inicializar structs de juego
-// 4. Inicializar MiniLibX y sprites
-// 5. Dibujar el mapa
-// 6. Capturar y gestionar teclas
-// 7. Actualizar estado del juego
-// 8. Contar movimientos y gestionar salida
-// 9. Liberar memoria y cerrar programa

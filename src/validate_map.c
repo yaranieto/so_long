@@ -1,0 +1,114 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/12 13:54:58 by ynieto-s          #+#    #+#             */
+/*   Updated: 2025/09/13 18:29:55 by ynieto-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+// revisar si la funcion está bien
+int	check_ber_extension(char *str1, char *str2, size_t n)
+{
+	size_t	len1;
+	size_t	len2;
+	
+	len1 = 0;
+	len2 = 0;
+	while (str1[len1])
+		len1++;
+	while (str2[len2])
+		len2++;
+	if (len1 < n)
+		n = len1;
+	if (len2 < n)
+		n = len2;
+	return (ft_strncmp(str1 + len1 - n, str2 + len2 - n, n));
+}
+
+int		valid_map(char **map)
+{
+	if (!check_rectangular(map))
+		return (0);
+	if (!check_walls(map))
+		return (0);
+	if (!check_chars(map))
+		return (0);
+	if (!check_all_elements(map))
+		return (0);
+	return (1);
+}
+
+void	flood_fill(char **map, t_map map_info, int y, int x)
+{
+	// 1. Comprobar limites, no salirse del mapa
+	if (x < 0 || y < 0 || x >= map_info.width || y >= map_info.height)
+		return ;
+	// 2. Comprobar si la posición es pared o ya visitada
+	if(map[y][x] == '1' || map[y][x] == 'F')
+		return ;
+	// 3. Marcar como visitado para no repetir
+	map[y][x] = 'F';
+	// 4. Llamada recursiva a las 4 direcciones (arriba, abajo, izq, dcha)
+	flood_fill(map, map_info, y + 1, x);
+	flood_fill(map, map_info, y - 1, x);
+	flood_fill(map, map_info, y, x + 1);
+	flood_fill(map, map_info, y, x - 1);
+}
+// Revisa si hay coleccionables o salida de inaccesibles en el mapa marcado
+int	check_access(char ** map, int height, int width)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			if (map[y][x] == 'C' || map[y][x] == 'E')
+				return (0); // Hay coleccionable o salida inaccesible
+			x++;
+		}
+		y++;
+	}
+	return (1);
+}
+// Función completa para validar la jugabilidad con flood_fill
+
+int	validate_game(t_game *game)
+{
+	int		height;
+	int		width;
+	char	**map_copy;
+	int 	i;
+	int 	valid;
+
+	height = game->map.height;
+	width = game->map.width;
+	map_copy = malloc(sizeof(char *) * (height + 1));
+	if (!map_copy)
+		return (0);
+	i = 0;
+	while (i < height)
+	{
+		map_copy[i] = ft_strdup(game->map.map[i]); // copia línea por línea
+		if (!map_copy[i])
+		{
+			free_map(map_copy);
+			return (0);
+		}
+		i++;
+	}
+	map_copy[height] = NULL;
+	flood_fill(map_copy, game->map, game->player_y, game->player_x);
+	valid = check_access(map_copy, height, width);
+	free_map(map_copy);
+	return (valid);
+}
