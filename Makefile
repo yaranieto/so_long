@@ -6,7 +6,7 @@
 #    By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/20 20:22:45 by ynieto-s          #+#    #+#              #
-#    Updated: 2025/09/13 17:14:49 by ynieto-s         ###   ########.fr        #
+#    Updated: 2025/09/13 22:13:34 by ynieto-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =	src/so_long.c \
 		src/render.c \
 		src/valid_map.c \
 		src/validate_map.c \
+		src/validate_map_utils.c \
 		
 OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a

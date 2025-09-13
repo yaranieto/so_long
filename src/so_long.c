@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:07:01 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 18:38:38 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:21:56 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	if (argc != 2)
-		error_exit("Usage: ./so_long <map.ber>");
-	if (check_ber_extension(argv[1], ".ber", 4))
-		error_exit("The map file must end with .ber");
-	game.map.map =  read_map(argv[1]);
-	//printf("map_str:\n%s\n", game.map.map[0]);
-	if (!game.map.map[0])
-		exit_free_error("Error reading the map", &game);
-	game.map.map = game.map.map;
-	game.map.height = count_lines(game.map.map);
-	if (game.map.height < 3)
-		exit_free_error("Map too small", &game);
-	game.map.width = ft_strlen(game.map.map[0]);
-	if (!valid_map(game.map.map))
-		exit_free_error("Invalid map", &game);
-	game.map = game.map;
+		error_exit("Error\nUsage: ./so_long <map_file.ber>");
+	
+	check_extension(argv[1]);
+	game.map.map = read_map(argv[1]);
+	if (!game.map.map)
+		error_exit("Error reading map");
+
+	validate_map(&game.map);
 	player_position(&game.map, &game);
+	
 	if (!validate_game(&game))
-		exit_free_error("Unreachable exit or collectible", &game);
+		error_exit("Error: Map is not playable - all collectibles and exit must be reachable");
+
+	// Set tile size to make each tile 32x32 pixels
+	game.map.tile_size = 64;
+
 	start_game(&game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	free_map(game.map.map);
 	return (0);
 }

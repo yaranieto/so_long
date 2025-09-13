@@ -6,11 +6,16 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:54:58 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 18:29:55 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:13:34 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+// Prototipos de funciones auxiliares
+int validate_map_chars(t_map *map);
+int validate_map_borders(t_map *map);
+int count_map_elements(t_map *map, char element);
 
 // revisar si la funcion está bien
 int	check_ber_extension(char *str1, char *str2, size_t n)
@@ -31,7 +36,7 @@ int	check_ber_extension(char *str1, char *str2, size_t n)
 	return (ft_strncmp(str1 + len1 - n, str2 + len2 - n, n));
 }
 
-int		valid_map(char **map)
+int		valid_map(t_map *map)
 {
 	if (!check_rectangular(map))
 		return (0);
@@ -84,31 +89,60 @@ int	check_access(char ** map, int height, int width)
 
 int	validate_game(t_game *game)
 {
-	int		height;
-	int		width;
 	char	**map_copy;
-	int 	i;
-	int 	valid;
+	int		i;
+	int		valid;
 
-	height = game->map.height;
-	width = game->map.width;
-	map_copy = malloc(sizeof(char *) * (height + 1));
+	map_copy = malloc(sizeof(char *) * (game->map.height + 1));
 	if (!map_copy)
 		return (0);
+
 	i = 0;
-	while (i < height)
+	while (i < game->map.height)
 	{
-		map_copy[i] = ft_strdup(game->map.map[i]); // copia línea por línea
+		map_copy[i] = ft_strdup(game->map.map[i]);
 		if (!map_copy[i])
 		{
-			free_map(map_copy);
+			while (i > 0)
+				free(map_copy[--i]);
+			free(map_copy);
 			return (0);
 		}
 		i++;
 	}
-	map_copy[height] = NULL;
+	map_copy[game->map.height] = NULL;
+
+	// Do flood fill starting from player position
 	flood_fill(map_copy, game->map, game->player_y, game->player_x);
-	valid = check_access(map_copy, height, width);
-	free_map(map_copy);
+	valid = check_access(map_copy, game->map.height, game->map.width);
+
+	// Clean up
+	i = 0;
+	while (map_copy[i])
+		free(map_copy[i++]);
+	free(map_copy);
+
 	return (valid);
+}
+
+static void	check_map_elements(t_map *map)
+{
+	if (count_map_elements(map, 'P') != 1)
+		error_exit("Must have exactly one player");
+	if (count_map_elements(map, 'E') != 1)
+		error_exit("Must have exactly one exit");
+	if (count_map_elements(map, 'C') < 1)
+		error_exit("Must have at least one collectible");
+	map->total_collectibles = count_map_elements(map, 'C');
+}
+
+void	validate_map(t_map *map)
+{
+	if (!check_rectangular(map))
+		error_exit("Map must be rectangular");
+	if (!validate_map_chars(map))
+		error_exit("Invalid characters in map");
+	if (!validate_map_borders(map))
+		error_exit("Map must be surrounded by walls");
+	check_map_elements(map);
 }

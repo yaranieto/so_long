@@ -6,27 +6,27 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:37:40 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/12 19:40:29 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/13 20:41:07 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_rectangular(char **map) // comprueba de ancho pero no de altura
+int	check_rectangular(t_map *map)
 {
-	int	width;
+	int	i;
 	int	len;
 
-	if (!map || !map[0])
-		return (0);
-	width = ft_strlen(map[0]);
-	len = 1; // recorre la segunda línea del mapa para compararla con la primera(width)
-	while (map[len])
+	i = 0;
+	len = ft_strlen(map->map[0]);
+	while (map->map[i])
 	{
-		if (ft_strlen(map[len]) != width)
+		if (ft_strlen(map->map[i]) != len)
 			return (0);
-		len++;
+		i++;
 	}
+	map->width = len;
+	map->height = i;
 	return (1);
 }
 
@@ -54,73 +54,87 @@ int	check_the_element(char **map, char c)
 	return (count);
 }
 
-int	check_all_elements(char **map)
+int	check_all_elements(t_map *map)
 {
-	int	player;
-	int	exit;
-	int	collectable;
+	int	has_exit;
+	int	has_player;
+	int	has_collectible;
 
-	player = check_the_element(map, 'P');
-	exit = check_the_element(map, 'E');
-	collectable = check_the_element(map, 'C');
+	has_exit = check_the_element(map->map, 'E');
+	has_player = check_the_element(map->map, 'P');
+	has_collectible = check_the_element(map->map, 'C');
 
-	if (player != 1)
+	if (has_exit != 1 || has_player != 1 || has_collectible < 1)
 		return (0);
-	if (exit != 1)
-		return (0);
-	if (collectable < 1)
-		return (0);
+	
+	map->total_collectibles = has_collectible;
 	return (1);
 }
 
-int	check_chars(char **map)
+int	check_chars(t_map *map)
 {
-	int	y;
-	int x;
-	int	width;
+	int	i;
+	int	j;
 
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		width = ft_strlen(map[y]);
-		while (x < width)
-		{
-			if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != 'P' &&
-				map[y][x] != 'E' && map[y][x] != 'C')
-				return (0);
-			x++;
-		}
-		y++;
-	}
-	return (1);
-}
-
-int	check_walls(char **map) //comprobar si la función está bien.
-{
-	int		width; // cantidad columnas
-	int		height; // cantidad filas
-	int		i;
-
-	if (!map || !map[0])
-		return (0);
-	width = ft_strlen(map[0]);
-	height = 0;
-	while (map[height])
-		height++;
-	i = 1;
-	while (i < height - 1)
-	{
-		if (map[i][0] != '1' || map[i][width - 1] != '1')
-			return (0);
-		i++;
-	}
 	i = 0;
-	while (i < width)
+	while (i < map->height)
 	{
-		if (map[0][i] != '1' || map[height - 1][i] != '1')
-			return (0);
+		j = 0;
+		while (j < map->width)
+		{
+			if (map->map[i][j] != '0' && map->map[i][j] != '1' &&
+				map->map[i][j] != 'C' && map->map[i][j] != 'E' &&
+				map->map[i][j] != 'P')
+				return (0);
+			j++;
+		}
 		i++;
 	}
 	return (1);
+}
+
+int	check_walls(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (i == 0 || i == map->height - 1)
+			{
+				if (map->map[i][j] != '1')
+					return (0);
+			}
+			else if (j == 0 || j == map->width - 1)
+			{
+				if (map->map[i][j] != '1')
+					return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	check_ber_extension(char *str1, char *str2, size_t n)
+{
+	size_t	len1;
+	size_t	len2;
+	
+	len1 = ft_strlen(str1);
+	len2 = ft_strlen(str2);
+	if (len1 < n || len2 < n)
+		return (1);
+	return (ft_strncmp(str1 + len1 - n, str2, n));
+}
+
+void	check_extension(char *filename)
+{
+	if (check_ber_extension(filename, ".ber", 4) != 0)
+		error_exit("Error: Map file must have .ber extension");
 }

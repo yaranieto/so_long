@@ -6,23 +6,28 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:14:43 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 18:07:59 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:13:34 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	exit_free_error(const char *msg, t_game *game)
+void	error_exit(const char *message)
 {
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	ft_memdel(game->map.map);
-	exit (1);
+	ft_putstr_fd("Error\n", 2);
+	ft_putendl_fd((char *)message, 2);
+	exit(1);
+}
+
+void	print_error(const char *message)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putendl_fd((char *)message, 2);
 }
 
 void	ft_putstr_fd(const char *s, int fd)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (s == NULL)
@@ -34,14 +39,7 @@ void	ft_putstr_fd(const char *s, int fd)
 	}
 }
 
-void	error_exit(const char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit(1);
-}
-
-int		count_lines(char **map)
+int	count_lines(char **map)
 {
 	int	count;
 
@@ -51,7 +49,7 @@ int		count_lines(char **map)
 	return (count);
 }
 
-void ft_memdel(void *ptr)
+void	ft_memdel(void *ptr)
 {
 	if (!ptr)
 		return ;
