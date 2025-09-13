@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/13 22:32:31 by ynieto-s          #+#    #+#             */
+/*   Updated: 2025/09/13 23:05:56 by ynieto-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 int	validate_map_chars(t_map *map)
@@ -16,27 +28,6 @@ int	validate_map_chars(t_map *map)
 			x++;
 		}
 		y++;
-	}
-	return (1);
-}
-
-int	validate_map_borders(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->width)
-	{
-		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
-			return (0);
-		i++;
-	}
-	i = 0;
-	while (i < map->height)
-	{
-		if (map->map[i][0] != '1' || map->map[i][map->width - 1] != '1')
-			return (0);
-		i++;
 	}
 	return (1);
 }

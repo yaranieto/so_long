@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   error_exit_extra.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 17:35:33 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:27:39 by ynieto-s         ###   ########.fr       */
+/*   Created: 2025/09/13 23:18:50 by ynieto-s          #+#    #+#             */
+/*   Updated: 2025/09/13 23:19:06 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	move_up(t_game *game)
+void	ft_memdel(void *ptr)
 {
-	move_player(game, 0, -1);
+	if (!ptr)
+		return ;
+	free(ptr);
+	ptr = NULL;
 }
 
-void	move_down(t_game *game)
+void	free_map(char **array)
 {
-	move_player(game, 0, 1);
-}
+	int	i;
 
-void	move_left(t_game *game)
-{
-	move_player(game, -1, 0);
-}
-
-void	move_right(t_game *game)
-{
-	move_player(game, 1, 0);
+	if (array != NULL)
+	{
+		i = 0;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+	}
 }
