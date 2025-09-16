@@ -6,7 +6,7 @@
 #    By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/20 20:22:45 by ynieto-s          #+#    #+#              #
-#    Updated: 2025/09/13 23:23:52 by ynieto-s         ###   ########.fr        #
+#    Updated: 2025/09/16 17:18:43 by ynieto-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +29,16 @@ SRC = src/so_long.c \
 	src/moves.c \
 	src/render.c \
 	src/validate_map.c \
-	src/valid_map.c \
+	src/check_map.c \
 	src/validate_map_extras.c \
 	src/validate_map_utils.c \
-	src/game_utils.c \
+	src/player_moves.c \
 	src/map_reader.c \
 	src/hooks.c \
 	src/images.c \
-	src/images_extra.c \
-	src/error_exit_extra.c
+	src/access_to_map.c \
+	src/free.c \
+	src/utils.c
 
 OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a

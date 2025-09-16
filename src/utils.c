@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 22:29:09 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:29:21 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:00:52 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,35 @@ int	count_lines(char **map)
 	return (count);
 }
 
-void	ft_memdel(void *ptr)
+void	load_images_extra(t_game *game)
 {
-	if (!ptr)
-		return ;
-	free(ptr);
-	ptr = NULL;
+	load_collectible_image(game);
+	load_floor_image(game);
 }
 
-void	free_map(char **array)
+char	**dup_map(t_map *map)
 {
-	int	i;
+	int		i;
+	char	**copy;
 
-	if (array != NULL)
+	if (!map)
+		return (NULL);
+	copy = malloc(sizeof(char *) * (map->height + 1));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (i < map->height)
 	{
-		i = 0;
-		while (array[i])
+		copy[i] = ft_strdup(map->map[i]);
+		if (!copy[i])
 		{
-			free(array[i]);
-			i++;
+			while (i > 0)
+				free(copy[--i]);
+			free(copy);
+			return (NULL);
 		}
-		free(array);
+		i++;
 	}
+	copy[i] = NULL;
+	return (copy);
 }

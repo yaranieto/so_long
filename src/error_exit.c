@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:14:43 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 23:18:47 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:01:15 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,11 @@
 
 void	error_exit(const char *message)
 {
-	ft_putstr_fd("Error\n", 2);
 	ft_putendl_fd((char *)message, 2);
 	exit(1);
 }
 
 void	print_error(const char *message)
 {
-	ft_putstr_fd("Error\n", 2);
 	ft_putendl_fd((char *)message, 2);
-}
-
-void	ft_putstr_fd(const char *s, int fd)
-{
-	int		i;
-
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-}
-
-int	count_lines(char **map)
-{
-	int	count;
-
-	count = 0;
-	while (map && map[count])
-		count++;
-	return (count);
 }

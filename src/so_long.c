@@ -6,29 +6,26 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:07:01 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:28:11 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:38:19 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
 	if (argc != 2)
-		error_exit("Error\nUsage: ./so_long <map_file.ber>");
+		error_exit("Usage: ./so_long <map_file.ber>");
 	check_extension(argv[1]);
 	game.map.map = read_map(argv[1]);
 	if (!game.map.map)
 		error_exit("Error reading map");
 	validate_map(&game.map);
 	player_position(&game.map, &game);
-	if (!validate_game(&game))
-		error_exit("Error: Map is not playable - all collectibles and "
-			"exit must be reachable");
-	game.map.tile_size = 64;
+	if (!playable_game(&game))
+		error_exit("Error: all collectibles and exit must be reachable");
 	start_game(&game);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);

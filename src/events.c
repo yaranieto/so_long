@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:37:53 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 23:22:21 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:29:43 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	load_player_image(t_game *game)
 	tex = mlx_load_png("textures/player.png");
 	if (!tex)
 		error_exit("Error loading player texture");
-	game->player.img = mlx_new_image(game->mlx, game->map.tile_size,
-			game->map.tile_size);
+	game->player.img = mlx_new_image(game->mlx, TILE_SIZE,
+			TILE_SIZE);
 	if (!game->player.img)
 		error_exit("Error creating player image");
 	copy_texture_to_image(game->player.img, tex);
@@ -55,21 +55,4 @@ void	load_images(t_game *game)
 	load_exit_image(game);
 	load_wall_image(game);
 	load_images_extra(game);
-}
-
-void	key_hook(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(game->mlx);
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		move_up(game);
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		move_down(game);
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		move_left(game);
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		move_right(game);
 }

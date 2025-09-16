@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 22:15:06 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:48:59 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:53:45 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	load_wall_image(t_game *game)
 	tex = mlx_load_png("textures/wall.png");
 	if (!tex)
 		error_exit("Error loading wall texture");
-	game->wall.img = mlx_new_image(game->mlx, game->map.tile_size,
-			game->map.tile_size);
+	game->wall.img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 	if (!game->wall.img)
 		error_exit("Error creating wall image");
 	copy_texture_to_image(game->wall.img, tex);
@@ -36,8 +35,7 @@ void	load_exit_image(t_game *game)
 	tex = mlx_load_png("textures/exit.png");
 	if (!tex)
 		error_exit("Error loading exit texture");
-	game->exit.img = mlx_new_image(game->mlx, game->map.tile_size,
-			game->map.tile_size);
+	game->exit.img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 	if (!game->exit.img)
 		error_exit("Error creating exit image");
 	copy_texture_to_image(game->exit.img, tex);
@@ -51,8 +49,7 @@ void	load_collectible_image(t_game *game)
 	tex = mlx_load_png("textures/collectible.png");
 	if (!tex)
 		error_exit("Error loading collectible texture");
-	game->collectible.img = mlx_new_image(game->mlx, game->map.tile_size,
-			game->map.tile_size);
+	game->collectible.img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 	if (!game->collectible.img)
 		error_exit("Error creating collectible image");
 	copy_texture_to_image(game->collectible.img, tex);
@@ -66,8 +63,7 @@ void	load_floor_image(t_game *game)
 	tex = mlx_load_png("textures/floor.png");
 	if (!tex)
 		error_exit("Error loading floor texture");
-	game->floor.img = mlx_new_image(game->mlx, game->map.tile_size,
-			game->map.tile_size);
+	game->floor.img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 	if (!game->floor.img)
 		error_exit("Error creating floor image");
 	copy_texture_to_image(game->floor.img, tex);

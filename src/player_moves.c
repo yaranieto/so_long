@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_utils.c                                       :+:      :+:    :+:   */
+/*   player_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 22:50:00 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:32:51 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:28:01 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	handle_player_move(t_game *game, int nx, int ny)
 {
 	game->map.map[game->player_y][game->player_x] = '0';
 	game->map.map[ny][nx] = 'P';
-	game->player.img->instances[0].x = nx * game->map.tile_size;
-	game->player.img->instances[0].y = ny * game->map.tile_size;
+	game->player.img->instances[0].x = nx * TILE_SIZE;
+	game->player.img->instances[0].y = ny * TILE_SIZE;
 	game->player_x = nx;
 	game->player_y = ny;
 	game->steps++;

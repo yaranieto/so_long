@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 22:32:31 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 23:05:56 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:47:19 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	validate_map_chars(t_map *map)
 	return (1);
 }
 
-int	count_map_elements(t_map *map, char element)
+int	count_map_elements(t_map *map, char c)
 {
 	int	count;
 	int	y;
@@ -45,7 +45,7 @@ int	count_map_elements(t_map *map, char element)
 		x = 0;
 		while (x < map->width)
 		{
-			if (map->map[y][x] == element)
+			if (map->map[y][x] == c)
 				count++;
 			x++;
 		}

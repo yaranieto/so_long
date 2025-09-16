@@ -6,7 +6,7 @@
 /*   By: ynieto-s <ynieto-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:37:44 by ynieto-s          #+#    #+#             */
-/*   Updated: 2025/09/13 22:28:16 by ynieto-s         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:31:13 by ynieto-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	render_floors(t_game *game)
 		while (x < game->map.width)
 		{
 			mlx_image_to_window(game->mlx, game->floor.img,
-				x * game->map.tile_size, y * game->map.tile_size);
+				x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
@@ -44,7 +44,7 @@ static void	render_walls(t_game *game)
 		{
 			if (game->map.map[y][x] == '1')
 				mlx_image_to_window(game->mlx, game->wall.img,
-					x * game->map.tile_size, y * game->map.tile_size);
+					x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
@@ -64,7 +64,7 @@ static void	render_collectibles(t_game *game)
 		{
 			if (game->map.map[y][x] == 'C')
 				mlx_image_to_window(game->mlx, game->collectible.img,
-					x * game->map.tile_size, y * game->map.tile_size);
+					x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
@@ -84,10 +84,10 @@ static void	render_exit_and_player(t_game *game)
 		{
 			if (game->map.map[y][x] == 'E')
 				mlx_image_to_window(game->mlx, game->exit.img,
-					x * game->map.tile_size, y * game->map.tile_size);
+					x * TILE_SIZE, y * TILE_SIZE);
 			if (game->map.map[y][x] == 'P')
 				mlx_image_to_window(game->mlx, game->player.img,
-					x * game->map.tile_size, y * game->map.tile_size);
+					x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
